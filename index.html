@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IPTV Portal</title>
+</head>
+<body>
+  <h1>Enter MAC Address</h1>
+  <input type="text" id="mac" placeholder="00:1A:2B:3C:4D:5E"/>
+  <button onclick="login()">Login</button>
+  <ul id="channels"></ul>
+
+  <script>
+    async function login() {
+      const mac = document.getElementById('mac').value;
+      const res = await fetch('https://your-backend-url.onrender.com/api/auth', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ mac })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const list = document.getElementById('channels');
+        list.innerHTML = '';
+        data.channels.forEach(channel => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="\${channel.url}" target="_blank">\${channel.name}</a>`;
+          list.appendChild(li);
+        });
+      } else {
+        alert('Unauthorized');
+      }
+    }
+  </script>
+</body>
+</html>
