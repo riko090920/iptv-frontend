@@ -14,7 +14,7 @@
   <script>
     async function login() {
       const mac = document.getElementById('mac').value;
-      const res = await fetch('https://your-backend-url.onrender.com/api/auth', {
+      const res = await fetch('https://iptv-backend.onrender.com/api/auth', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ mac })
